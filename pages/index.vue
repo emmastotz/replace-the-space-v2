@@ -1,5 +1,7 @@
 <template>
-  <Tutorial />
+  <div class="font-bold">
+    Hello
+  </div>
 </template>
 
 <script>
