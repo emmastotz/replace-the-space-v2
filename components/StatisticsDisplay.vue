@@ -1,20 +1,11 @@
 <template>
-  <div class="grid grid-cols-2 text-white font-semibold uppercase">
+  <div class="flex space-x-8 text-white font-semibold uppercase bg-blue-200 text-blue-600 p-2 justify-center">
     <span>
       Wins: {{ stats.wins }}
     </span>
     <span>
-      Guesses Left: {{ guessesLeft }}
-    </span>
-    <span>
       Losses: {{ stats.losses }}
     </span>
-    <div v-if="strikes.length >= 0">
-      Strikes:
-      <span v-for="letter of strikes" :key="letter">
-        {{ letter }}
-      </span>
-    </div>
   </div>
 </template>
 
@@ -23,14 +14,6 @@ export default {
   props: {
     stats: {
       type: Object,
-      required: true
-    },
-    guessesLeft: {
-      type: Number,
-      required: true
-    },
-    strikes: {
-      type: Array,
       required: true
     }
   }
