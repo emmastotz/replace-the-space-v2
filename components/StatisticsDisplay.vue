@@ -7,11 +7,11 @@
       Losses: {{ stats.losses }}
     </span>
     <span>
-      Guesses Left: {{ stats.guessesLeft }}
+      Guesses Left: {{ guessesLeft }}
     </span>
-    <div v-if="lettersGuessed.length > 0">
+    <div v-if="incorrectGuesses.length > 0">
       Letters Guessed:
-      <span v-for="letter of lettersGuessed" :key="letter">
+      <span v-for="letter of incorrectGuesses" :key="letter">
         {{ letter }}
       </span>
     </div>
@@ -25,7 +25,11 @@ export default {
       type: Object,
       required: true
     },
-    lettersGuessed: {
+    guessesLeft: {
+      type: Number,
+      required: true
+    },
+    incorrectGuesses: {
       type: Array,
       required: true
     }
