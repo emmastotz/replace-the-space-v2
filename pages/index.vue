@@ -64,7 +64,7 @@ import StatisticsDisplay from '@/components/StatisticsDisplay.vue'
 
 const allowedStrikes = 3
 
-const defaultStrikes = new Array(allowedStrikes).fill({ icon: '', guess: '' })
+const defaultStrikes = new Array(allowedStrikes).fill({ icon: '⚪', guess: '' })
 
 export default {
   components: { StatisticsDisplay },
@@ -137,7 +137,7 @@ export default {
     guess (letter) {
       this.guesses.push(letter)
       if (!this.currentWord.includes(letter)) {
-        this.strikes = [{ icon: '🚫', guess: letter }, ...this.strikes]
+        this.strikes = [{ icon: '🚫', guess: letter }, ...this.strikes.slice(0, 2)]
       }
       if (this.strikeout) {
         this.gameOver = true
