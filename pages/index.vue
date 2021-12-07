@@ -22,8 +22,8 @@
         <div class="grid grid-cols-9 grid-flow-row gap-1 sm:gap-2 lg:gap-4">
           <div v-for="letter of letters" :key="letter">
             <button
-              class="w-full text-white uppercase font-semibold text-lg rounded-md px-4 py-2 hover:shadow-inner hover:bg-red-500 disabled:opacity-50"
-              :class="{'bg-red-900 text-white shadow-inner': badGuesses.includes(letter), 'bg-blue-600 text-white shadow-inner': guesses.includes(letter)}"
+              class="w-full text-white uppercase font-semibold text-lg rounded-md px-4 py-2 hover:shadow-inner hover:bg-red-500"
+              :class="{'bg-red-900 shadow-inner' : guesses.includes(letter)}"
               :disabled="guesses.includes(letter) || gameOver"
               @click="guess(letter)"
             >
