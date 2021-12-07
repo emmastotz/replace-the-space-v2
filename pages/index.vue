@@ -37,6 +37,7 @@ export default {
     return {
       isPlaying: false,
       gameOver: false,
+      isCorrect: false,
       randomWord: {
         word: '',
         wordLength: 0,
@@ -90,7 +91,6 @@ export default {
     },
     generateRandomWord () {
       this.randomWord.word = this.wordLibrary[Math.floor(Math.random() * this.wordLibrary.length)]
-      console.log(this.randomWord.word)
       this.randomWord.wordLength = this.randomWord.word.length
       for (let i = 0; i < this.randomWord.wordLength; i++) {
         this.randomWord.letters.push({
@@ -103,21 +103,46 @@ export default {
     guess (guess) {
       this.lettersGuessed.push(guess)
 
-      for (let i = 0; i < this.randomWord.wordLength; i++) {
+      for (let i = 0; i <= this.randomWord.wordLength; i++) {
         if (guess === this.randomWord.word[i]) {
           this.showLetter(i)
+          this.isCorrect = true
         }
       }
 
       this.randomWord.wordLength--
 
-      if (this.gameOver && this.guessesLeft > 0) {
+      if (!this.isCorrect && this.guessesLeft > 0 && !this.lettersGuessed.includes(guess)) {
         this.guessesLeft--
         this.incorrectGuesses.push(guess)
+      }
+
+      this.isCorrect = false
+
+      if (this.guessesLeft === 0 && this.randomWord.wordLength > 0) {
+        this.lose()
+      }
+
+      if (this.guessesLeft > 0 && this.randomWord.wordLength === 0) {
+        this.win()
       }
     },
     showLetter (i) {
       this.randomWord.letters[i].isShowing = !this.randomWord.letters[i].isShowing
+    },
+    lose () {
+      this.stats.losses++
+      const playAgain = confirm('You lose. The correct answer was ' + this.randomWord.word + '. Would you like to play again?')
+      if (playAgain) {
+        this.initialize()
+      }
+    },
+    win () {
+      this.stats.wins++
+      const playAgain = confirm('You won. Keep the streak alive?')
+      if (playAgain) {
+        this.initialize()
+      }
     }
   }
 }
