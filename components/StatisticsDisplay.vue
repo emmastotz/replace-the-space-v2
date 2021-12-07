@@ -1,5 +1,5 @@
 <template>
-  <div class="grid text-white font-semibold uppercase">
+  <div class="grid grid-cols-2 text-white font-semibold uppercase">
     <span>
       Wins: {{ stats.wins }}
     </span>
@@ -9,8 +9,8 @@
     <span>
       Guesses Left: {{ guessesLeft }}
     </span>
-    <div v-if="incorrectGuesses.length > 0">
-      Letters Guessed:
+    <div v-if="incorrectGuesses.length >= 0">
+      Incorrect Guesses:
       <span v-for="letter of incorrectGuesses" :key="letter">
         {{ letter }}
       </span>
