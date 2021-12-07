@@ -4,10 +4,10 @@
       Wins: {{ stats.wins }}
     </span>
     <span>
-      Losses: {{ stats.losses }}
+      Guesses Left: {{ guessesLeft }}
     </span>
     <span>
-      Guesses Left: {{ guessesLeft }}
+      Losses: {{ stats.losses }}
     </span>
     <div v-if="incorrectGuesses.length >= 0">
       Incorrect Guesses:
