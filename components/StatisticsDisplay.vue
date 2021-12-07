@@ -9,9 +9,9 @@
     <span>
       Losses: {{ stats.losses }}
     </span>
-    <div v-if="incorrectGuesses.length >= 0">
-      Incorrect Guesses:
-      <span v-for="letter of incorrectGuesses" :key="letter">
+    <div v-if="strikes.length >= 0">
+      Strikes:
+      <span v-for="letter of strikes" :key="letter">
         {{ letter }}
       </span>
     </div>
@@ -29,7 +29,7 @@ export default {
       type: Number,
       required: true
     },
-    incorrectGuesses: {
+    strikes: {
       type: Array,
       required: true
     }
