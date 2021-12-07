@@ -40,9 +40,14 @@
       </div>
     </div>
     <div class="flex flex-col space-y-6 justify-center bg-gradient-to-tl from-blue-900 via-blue-700 to-blue-400">
-      <StatisticsDisplay
-        :stats="stats"
-      />
+      <div class="flex space-x-8 text-white font-semibold uppercase bg-blue-200 text-blue-600 p-2 justify-center">
+        <span>
+          Wins: {{ stats.wins }}
+        </span>
+        <span>
+          Losses: {{ stats.losses }}
+        </span>
+      </div>
       <div class="flex justify-center">
         <button class="uppercase bg-blue-200 text-blue-600 font-semibold tracking-widest text-lg rounded-md px-4 py-1 shadow hover:shadow-lg hover:bg-white" :class="{'bg-orange-500 text-white': gameOver}" @click="newGame">
           New Game
@@ -60,14 +65,10 @@
 </template>
 
 <script>
-import StatisticsDisplay from '@/components/StatisticsDisplay.vue'
-
 const allowedStrikes = 3
-
 const defaultStrikes = new Array(allowedStrikes).fill({ icon: '⚪', guess: '' })
 
 export default {
-  components: { StatisticsDisplay },
   data () {
     return {
       letters: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
