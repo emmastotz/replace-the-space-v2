@@ -1,15 +1,15 @@
 <template>
-  <main class="bg-gradient-to-tl from-blue-900 via-blue-700 to-blue-400 h-screen overflow-hidden">
+  <main class="h-screen">
     <div class="bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center py-16 w-full">
       <div class="grid gap-8 w-full justify-center">
         <div class="grid gap-1 sm:gap-2 lg:gap-4 max-w-7xl" :class="`grid-cols-${currentWord.length}`">
-          <div v-for="letter of splitWord" :key="letter" class="border-b-2 border-white font-semibold text-lg text-white sm:px-6 sm:py-4 justify-center">
+          <div v-for="letter of splitWord" :key="letter" class="flex border-b-2 border-white font-semibold text-lg text-white justify-center uppercase sm:px-6 sm:py-4">
             {{ isRevealed(letter) }}
           </div>
         </div>
 
         <div class="flex space-x-5 font-semibold uppercase text-white">
-          <h2>
+          <h2 class="tracking-widest">
             Strikes:
           </h2>
           <ul v-for="strike of strikes" :key="strike.guess">
@@ -20,26 +20,26 @@
         </div>
 
         <div class="grid grid-cols-9 grid-flow-row gap-1 sm:gap-2 lg:gap-4">
-          <button
-            v-for="letter of letters"
-            :key="letter"
-            class="w-full bg-red-100 rounded-md uppercase text-red-600 font-semibold text-lg rounded-md px-4 py-2 shadow hover:shadow-lg hover:bg-white disabled:opacity-50"
-            :class="{'bg-orange-500 text-white': badGuesses.includes(letter), 'bg-green-500 text-white': guesses.includes(letter)}"
-            :disabled="guesses.includes(letter) || gameOver"
-            @click="guess(letter)"
-          >
-            <span>{{ letter }}</span>
-          </button>
+          <div v-for="letter of letters" :key="letter">
+            <button
+              class="w-full text-white uppercase font-semibold text-lg rounded-md px-4 py-2 hover:shadow-inner hover:bg-red-500 disabled:opacity-50"
+              :class="{'bg-red-900 text-white shadow-inner': badGuesses.includes(letter), 'bg-blue-600 text-white shadow-inner': guesses.includes(letter)}"
+              :disabled="guesses.includes(letter) || gameOver"
+              @click="guess(letter)"
+            >
+              <span>{{ letter }}</span>
+            </button>
+          </div>
         </div>
 
         <div>
-          <p class="text-white font-semibold">
+          <p class="text-white font-semibold uppercase tracking-widest">
             {{ message }}
           </p>
         </div>
       </div>
     </div>
-    <div class="flex flex-col space-y-6 justify-center">
+    <div class="flex flex-col space-y-6 justify-center bg-gradient-to-tl from-blue-900 via-blue-700 to-blue-400">
       <StatisticsDisplay
         :stats="stats"
       />
@@ -48,13 +48,13 @@
           New Game
         </button>
       </div>
-    </div>
-    <div class="flex px-12 justify-center">
-      <img
-        class="object-cover lg:max-w-8xl"
-        src="@/assets/images/replacethespace.png"
-        alt="Replace the Space Logo"
-      >
+      <div class="px-12 pb-40">
+        <img
+          class="object-cover lg:max-w-8xl"
+          src="@/assets/images/replacethespace.png"
+          alt="Replace the Space Logo"
+        >
+      </div>
     </div>
   </main>
 </template>
@@ -64,14 +64,14 @@ import StatisticsDisplay from '@/components/StatisticsDisplay.vue'
 
 const allowedStrikes = 3
 
-const defaultStrikes = new Array(allowedStrikes).fill({ icon: '⚪', guess: '' })
+const defaultStrikes = new Array(allowedStrikes).fill({ icon: '', guess: '' })
 
 export default {
   components: { StatisticsDisplay },
   data () {
     return {
       letters: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
-      words: ['galaxy', 'neptune', 'blackhole', 'moon', 'eclipse', 'asteroid', 'jupiter', 'astronaut', 'telescope', 'mercury', 'density', 'saturn', 'mars', 'sun', 'star', 'comet', 'venus', 'uranus', 'earth', 'space', 'pluto', 'astronomy', 'equinox', 'cosmos', 'constellation', 'gravity'],
+      words: ['galaxy', 'neptune', 'blackhole', 'moon', 'eclipse', 'asteroid', 'jupiter', 'astronaut', 'telescope', 'mercury', 'density', 'saturn', 'mars', 'sun', 'star', 'comet', 'venus', 'uranus', 'earth', 'space', 'pluto', 'astronomy', 'equinox', 'cosmos', 'gravity'],
       currentWord: '',
       guesses: [],
       strikes: [...defaultStrikes],
@@ -119,27 +119,21 @@ export default {
     window.removeEventListener('keypress', e => this.handleKeyPress(e))
   },
   methods: {
-    // Allows user to enter guesses with the keyboard
     handleKeyPress (e) {
-      const key = e.key.toLowerCase()
-      if (key.length === 1 && this.alphabet.includes(key) && !this.lettersGuessed.includes(key)) {
-        this.userGuess = key
+      const key = e.key.toUpperCase()
+      if (key.length === 1 && key.match(/[a-zA-Z]/) && !this.guesses.includes(key)) {
+        this.guess(key)
       }
-
-      this.guess(this.userGuess)
     },
-    // Generates random word from the list
     generateRandomWord () {
       this.currentWord = this.words[Math.floor(Math.random() * this.words.length)]
     },
-    // Turns unguessed letters into blank spaces
     isRevealed (letter) {
       if (!letter.match(/[a-zA-Z\s]/)) {
         return letter
       }
       return this.guesses.includes(letter) || this.gameOver ? letter : ''
     },
-    // Handles the guess and all possible results
     guess (letter) {
       this.guesses.push(letter)
       if (!this.currentWord.includes(letter)) {
@@ -154,7 +148,6 @@ export default {
         this.stats.wins++
       }
     },
-    // Allows player to start a new game
     newGame () {
       const confirmation = confirm('End this game and start a new one?')
       if (!confirmation) { return }
