@@ -115,19 +115,19 @@ export default {
   created () {
     this.generateRandomWord()
   },
-  mounted () {
-    window.addEventListener('keypress', e => this.handleKeyPress(e))
-  },
-  destroyed () {
-    window.removeEventListener('keypress', e => this.handleKeyPress(e))
-  },
+  // mounted () {
+  //   window.addEventListener('keypress', e => this.handleKeyPress(e))
+  // },
+  // destroyed () {
+  //   window.removeEventListener('keypress', e => this.handleKeyPress(e))
+  // },
   methods: {
-    handleKeyPress (e) {
-      const key = e.key.toUpperCase()
-      if (key.length === 1 && key.match(/[a-zA-Z]/) && !this.guesses.includes(key)) {
-        this.guess(key)
-      }
-    },
+    // handleKeyPress (e) {
+    //   const key = e.key.toUpperCase()
+    //   if (key.length === 1 && key.match(/[a-zA-Z]/) && !this.guesses.includes(key)) {
+    //     this.guess(key)
+    //   }
+    // },
     generateRandomWord () {
       this.currentWord = this.words[Math.floor(Math.random() * this.words.length)]
     },
