@@ -2,7 +2,7 @@
   <main class="h-screen">
     <div class="bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center py-16 w-full">
       <div class="grid gap-12 w-full justify-center">
-        <div class="grid gap-1 sm:gap-2 lg:gap-4 max-w-7xl" :class="`grid-cols-${currentWord.length}`">
+        <div class="flex space-x-2">
           <div v-for="letter of splitWord" :key="letter" class="flex border-b-2 border-white font-semibold text-lg text-white justify-center uppercase sm:px-6 sm:py-4">
             {{ isRevealed(letter) }}
           </div>
@@ -135,7 +135,7 @@ export default {
       if (!letter.match(/[a-zA-Z\s]/)) {
         return letter
       }
-      return this.guesses.includes(letter) || this.gameOver ? letter : ''
+      return this.guesses.includes(letter) || this.gameOver ? letter : '?'
     },
     guess (letter) {
       this.guesses.push(letter)
