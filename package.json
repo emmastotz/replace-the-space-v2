@@ -2,7 +2,6 @@
   "name": "replace-the-space",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://emmastotz.github.io/replace-the-space-v2/",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
