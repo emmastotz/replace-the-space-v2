@@ -1,5 +1,9 @@
 # replace-the-space
 
+---
+permalink: /index.html
+---
+
 ## Build Setup
 
 ```bash
