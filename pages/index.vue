@@ -3,7 +3,7 @@
     <div class="bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center py-16 w-full">
       <div class="grid gap-12 w-full justify-center">
         <div class="flex space-x-2">
-          <div v-for="letter of splitWord" :key="letter" class="flex border-b-2 border-white font-semibold text-lg text-white justify-center uppercase sm:px-6 sm:py-4">
+          <div v-for="(letter, id) of splitWordWithId" :key="id" class="flex border-b-2 border-white font-semibold text-lg text-white justify-center uppercase sm:px-6 sm:py-4">
             {{ isRevealed(letter) }}
           </div>
         </div>
@@ -115,19 +115,7 @@ export default {
   created () {
     this.generateRandomWord()
   },
-  // mounted () {
-  //   window.addEventListener('keypress', e => this.handleKeyPress(e))
-  // },
-  // destroyed () {
-  //   window.removeEventListener('keypress', e => this.handleKeyPress(e))
-  // },
   methods: {
-    // handleKeyPress (e) {
-    //   const key = e.key.toUpperCase()
-    //   if (key.length === 1 && key.match(/[a-zA-Z]/) && !this.guesses.includes(key)) {
-    //     this.guess(key)
-    //   }
-    // },
     generateRandomWord () {
       this.currentWord = this.words[Math.floor(Math.random() * this.words.length)]
     },
