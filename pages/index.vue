@@ -3,7 +3,7 @@
     <div class="bg-gradient-to-tr from-red-600 to-red-900 flex items-center justify-center py-16 w-full">
       <div class="grid gap-12 w-full justify-center">
         <div class="flex space-x-2">
-          <div v-for="(letter, id) of splitWordWithId" :key="id" class="flex border-b-2 border-white font-semibold text-lg text-white justify-center uppercase sm:px-6 sm:py-4">
+          <div v-for="(letter, index) of splitWord" :key="index" class="flex border-b-2 border-white font-semibold text-lg text-white justify-center uppercase sm:px-6 sm:py-4">
             {{ isRevealed(letter) }}
           </div>
         </div>
