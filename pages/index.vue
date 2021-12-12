@@ -49,7 +49,7 @@
         </span>
       </div>
       <div class="flex justify-center">
-        <button class="uppercase bg-blue-200 text-blue-600 font-semibold tracking-widest text-lg rounded-md px-4 py-1 shadow hover:shadow-lg hover:bg-white" :class="{'bg-orange-500 text-white': gameOver}" @click="newGame">
+        <button class="uppercase bg-blue-200 text-blue-600 font-semibold tracking-widest text-lg rounded-md px-4 py-1 shadow hover:shadow-lg hover:bg-white" @click="showModal">
           New Game
         </button>
       </div>
@@ -61,14 +61,21 @@
         >
       </div>
     </div>
+
+    <BasicModal v-show="isModalVisible" @close="closeModal" @continue="newGame" />
   </main>
 </template>
 
 <script>
+import BasicModal from '@/components/BasicModal.vue'
+
 const allowedStrikes = 3
 const defaultStrikes = new Array(allowedStrikes).fill({ icon: '⚪', guess: '' })
 
 export default {
+  components: {
+    BasicModal
+  },
   data () {
     return {
       letters: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
@@ -80,7 +87,8 @@ export default {
       stats: {
         wins: 0,
         losses: 0
-      }
+      },
+      isModalVisible: false
     }
   },
   computed: {
@@ -140,12 +148,17 @@ export default {
       }
     },
     newGame () {
-      const confirmation = confirm('End this game and start a new one?')
-      if (!confirmation) { return }
+      this.isModalVisible = false
       this.generateRandomWord()
       this.guesses = []
       this.strikes = [...defaultStrikes]
       this.gameOver = false
+    },
+    showModal () {
+      this.isModalVisible = true
+    },
+    closeModal () {
+      this.isModalVisible = false
     }
   }
 }
